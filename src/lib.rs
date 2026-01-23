@@ -169,6 +169,72 @@ impl zed::Extension for FishExtension {
                 filter_range: (0..label.len()).into(),
                 code: label.clone(),
             }),
+            // External commands
+            zed::lsp::CompletionKind::Class => Some(CodeLabel {
+                spans: vec![CodeLabelSpan::code_range(0..label.len())],
+                filter_range: (0..label.len()).into(),
+                code: label.clone(),
+            }),
+            // Abbreviations - show expansion if available
+            zed::lsp::CompletionKind::Snippet => {
+                let code = match detail {
+                    Some(expansion) => format!("{label} -> {expansion}"),
+                    None => label.clone(),
+                };
+                Some(CodeLabel {
+                    spans: vec![CodeLabelSpan::code_range(0..label.len())],
+                    filter_range: (0..label.len()).into(),
+                    code,
+                })
+            }
+            // File paths
+            zed::lsp::CompletionKind::File => Some(CodeLabel {
+                spans: vec![CodeLabelSpan::code_range(0..label.len())],
+                filter_range: (0..label.len()).into(),
+                code: label.clone(),
+            }),
+            // Arguments/flags - show description if available
+            zed::lsp::CompletionKind::Property => {
+                let code = match detail {
+                    Some(desc) => format!("{label}  # {desc}"),
+                    None => label.clone(),
+                };
+                Some(CodeLabel {
+                    spans: vec![CodeLabelSpan::code_range(0..label.len())],
+                    filter_range: (0..label.len()).into(),
+                    code,
+                })
+            }
+            // Fish events
+            zed::lsp::CompletionKind::Event => {
+                let code = format!("--on-event {label}");
+                Some(CodeLabel {
+                    spans: vec![CodeLabelSpan::code_range(11..11 + label.len())],
+                    filter_range: (0..label.len()).into(),
+                    code,
+                })
+            }
+            // Operators (pipes, wildcards)
+            zed::lsp::CompletionKind::Operator => Some(CodeLabel {
+                spans: vec![CodeLabelSpan::code_range(0..label.len())],
+                filter_range: (0..label.len()).into(),
+                code: label.clone(),
+            }),
+            // Aliases
+            zed::lsp::CompletionKind::Constructor => {
+                let code = format!("alias {label}");
+                Some(CodeLabel {
+                    spans: vec![CodeLabelSpan::code_range(6..6 + label.len())],
+                    filter_range: (0..label.len()).into(),
+                    code,
+                })
+            }
+            // Status codes
+            zed::lsp::CompletionKind::EnumMember => Some(CodeLabel {
+                spans: vec![CodeLabelSpan::code_range(0..label.len())],
+                filter_range: (0..label.len()).into(),
+                code: label.clone(),
+            }),
             _ => None,
         }
     }
@@ -193,6 +259,14 @@ impl zed::Extension for FishExtension {
                 let code = format!("set {name}");
                 Some(CodeLabel {
                     spans: vec![CodeLabelSpan::code_range(4..4 + name.len())],
+                    filter_range: (0..name.len()).into(),
+                    code,
+                })
+            }
+            zed::lsp::SymbolKind::Constant => {
+                let code = format!("set -g {name}");
+                Some(CodeLabel {
+                    spans: vec![CodeLabelSpan::code_range(7..7 + name.len())],
                     filter_range: (0..name.len()).into(),
                     code,
                 })
