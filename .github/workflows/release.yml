@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-wasip1
+
+      - name: Cache cargo
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Build
+        run: cargo build --release --target wasm32-wasip1
+
+      - name: Package extension
+        run: |
+          mkdir -p dist
+          cp target/wasm32-wasip1/release/zed_fish_lsp.wasm dist/extension.wasm
+          cp extension.toml dist/
+          cp -r languages dist/
+          cp LICENSE dist/
+          cp README.md dist/
+          cd dist && zip -r ../zed-fish-lsp-${{ github.ref_name }}.zip .
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: zed-fish-lsp-${{ github.ref_name }}.zip
+          generate_release_notes: true

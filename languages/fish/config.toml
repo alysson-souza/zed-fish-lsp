@@ -1,0 +1,16 @@
+name = "Fish"
+grammar = "fish"
+path_suffixes = ["fish"]
+first_line_pattern = "^#!.*\\bfish\\b"
+line_comments = ["# "]
+
+brackets = [
+    { start = "[", end = "]", close = true, newline = false },
+    { start = "(", end = ")", close = true, newline = false },
+    { start = "{", end = "}", close = true, newline = false },
+    { start = "\"", end = "\"", close = true, newline = false, not_in = ["comment", "string"] },
+    { start = "'", end = "'", close = true, newline = false, not_in = ["comment", "string"] },
+]
+
+increase_indent_pattern = "^\\s*(function|if|else\\s+if|while|for|switch|case)\\b|^\\s*(begin|else)\\s*$|[({\\[]\\s*$"
+decrease_indent_pattern = "^\\s*(else|case|end)\\b|^\\s*[)}\\]]"
