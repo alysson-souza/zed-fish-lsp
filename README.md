@@ -56,35 +56,43 @@ npm install -g fish-lsp
 
 ## Configuration
 
-Configure the extension in your Zed `settings.json`:
+The extension works out of the box. To customize fish-lsp, add options to your Zed `settings.json`:
 
-```json
+```jsonc
 {
   "lsp": {
     "fish-lsp": {
       "initialization_options": {
-        "fish_lsp_show_client_popups": false,
-        "fish_lsp_diagnostic_disable_error_codes": [1001, 1002],
-        "fish_lsp_max_diagnostics": 100
+        // Disable specific diagnostic codes (default: [])
+        "fish_lsp_diagnostic_disable_error_codes": [2002, 2003],
+        // Max diagnostics per file (default: 0 = unlimited)
+        "fish_lsp_max_diagnostics": 100,
+        // Paths to index for completions and go-to-definition (default: ["$__fish_config_dir", "$__fish_data_dir"])
+        "fish_lsp_all_indexed_paths": [
+          "$__fish_config_dir",
+          "$__fish_data_dir",
+          "~/my-fish-scripts",
+        ],
+        // Paths where rename/refactoring is allowed (default: ["$__fish_config_dir"])
+        "fish_lsp_modifiable_paths": ["$__fish_config_dir"],
+        // Disable specific LSP handlers (default: [])
+        // Available: hover, complete, rename, definition, references, formatting, codeAction, signatureHelp, executeCommand
+        "fish_lsp_disabled_handlers": ["formatting"],
+        // Formatter executable (default: "fish_indent")
+        "fish_lsp_format_exec": "fish_indent",
+        // Formatter arguments (default: [])
+        "fish_lsp_format_args": ["--no-indent"],
+        // Log file for debugging (default: "" = disabled)
+        "fish_lsp_logfile": "/tmp/fish-lsp.log",
+        // Log level (default: "warning") — error, warning, info, debug, trace
+        "fish_lsp_log_level": "debug",
       },
-      "settings": {}
-    }
-  }
+    },
+  },
 }
 ```
 
-### Available Options
-
-| Option                                    | Type    | Default                                      | Description                              |
-| ----------------------------------------- | ------- | -------------------------------------------- | ---------------------------------------- |
-| `fish_lsp_show_client_popups`             | boolean | `false`                                      | Show popup notifications                 |
-| `fish_lsp_diagnostic_disable_error_codes` | array   | `[]`                                         | Disable specific diagnostic codes        |
-| `fish_lsp_max_diagnostics`                | number  | `0`                                          | Max diagnostics per file (0 = unlimited) |
-| `fish_lsp_enabled_handlers`               | array   | `[]`                                         | Enable specific LSP handlers             |
-| `fish_lsp_disabled_handlers`              | array   | `[]`                                         | Disable specific LSP handlers            |
-| `fish_lsp_all_indexed_paths`              | array   | `["$__fish_config_dir", "$__fish_data_dir"]` | Paths to index                           |
-
-See [fish-lsp documentation](https://github.com/ndonfris/fish-lsp) for all options.
+See [fish-lsp](https://github.com/ndonfris/fish-lsp) for diagnostic codes and more options.
 
 ### Runnables (Run Buttons)
 
