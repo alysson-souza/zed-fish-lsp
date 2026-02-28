@@ -14,3 +14,4 @@
 ((while_statement "while" @open "end" @close) (#set! rainbow.exclude))
 ((switch_statement "switch" @open "end" @close) (#set! rainbow.exclude))
 ((begin_statement "begin" @open "end" @close) (#set! rainbow.exclude))
+((begin_statement "{" @open "}" @close))

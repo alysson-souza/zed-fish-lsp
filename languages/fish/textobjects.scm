@@ -40,5 +40,9 @@
     "begin"
     (_)* @class.inside
     "end")
+(begin_statement
+    "{"
+    (_)* @class.inside
+    "}")
 
 (comment)+ @comment.around
