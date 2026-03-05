@@ -1,13 +1,11 @@
-; Run button on shebang line (run whole script)
+; Add support for running fish scripts
 (
-  (program . (comment) @run)
-  (#match? @run "^#!")
+  (program . (_) @run) @_fish-script
   (#set! tag fish-script)
 )
 
-; Run button on functions
+; ... and for individual functions
 (
-  (function_definition
-    name: (_) @run)
+    (function_definition . (_) @run) @_fish-function
   (#set! tag fish-function)
 )
