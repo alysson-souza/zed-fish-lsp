@@ -1,0 +1,8 @@
+[
+  {
+    "label": "fish: run script '${ZED_FILE}'",
+    "command": "fish",
+    "args": ["'${ZED_FILE}'"],
+    "tags": ["fish-script"]
+  }
+]
