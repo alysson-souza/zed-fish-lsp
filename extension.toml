@@ -1,7 +1,7 @@
 id = "fish-lsp"
 name = "Fish"
 description = "Fish shell language support with fish-lsp integration"
-version = "0.2.0"
+version = "0.2.1"
 schema_version = 1
 authors = ["Alysson Souza <alysson@ll9.com.br>"]
 repository = "https://github.com/alysson-souza/zed-fish-lsp"
