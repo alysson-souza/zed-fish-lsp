@@ -2,8 +2,24 @@
 
 (function_definition
     "function"
-    name: [(word) (concatenation)]
-    (_)* @function.inside
+    name: (_)
+    [
+        (begin_statement)
+        (break)
+        (command)
+        (conditional_execution)
+        (continue)
+        (for_statement)
+        (function_definition)
+        (if_statement)
+        (negated_statement)
+        (pipe)
+        (redirect_statement)
+        (return)
+        (switch_statement)
+        (while_statement)
+        (comment)
+    ] @function.inside
     "end")
 
 (if_statement) @class.around
@@ -25,7 +41,23 @@
     "for"
     variable: (_)
     "in"
-    (_)* @class.inside
+    [
+        (begin_statement)
+        (break)
+        (command)
+        (conditional_execution)
+        (continue)
+        (for_statement)
+        (function_definition)
+        (if_statement)
+        (negated_statement)
+        (pipe)
+        (redirect_statement)
+        (return)
+        (switch_statement)
+        (while_statement)
+        (comment)
+    ] @class.inside
     "end")
 
 (switch_statement) @class.around

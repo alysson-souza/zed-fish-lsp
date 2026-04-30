@@ -10,3 +10,10 @@ crate-type = ["cdylib"]
 
 [dependencies]
 zed_extension_api = "0.7.0"
+
+[dev-dependencies]
+tree-sitter = "0.22"
+
+[dev-dependencies.tree-sitter-fish]
+git = "https://github.com/ram02z/tree-sitter-fish"
+rev = "fa2143f5d66a9eb6c007ba9173525ea7aaafe788"

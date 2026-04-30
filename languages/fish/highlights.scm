@@ -7,12 +7,8 @@
 [(integer) (float)] @number
 
 [
-    "not"
-    "!"
     "and"
     "or"
-    "&&"
-    "||"
     (direction)
     (file_redirect)
     (stream_redirect)
@@ -28,11 +24,11 @@
 
 (command
     name: (word) @function (#eq? @function "test")
-    argument: (word) @constant (#match? @constant "^(-[A-Za-z]+|!?=|!)$"))
+    argument: (word) @constant (#match? @constant "^(!?=|!)$"))
 
 (command
     name: (word) @punctuation.bracket (#eq? @punctuation.bracket "[")
-    argument: (word) @constant (#match? @constant "^(-[A-Za-z]+|!?=|!)$"))
+    argument: (word) @constant (#match? @constant "^(!?=|!)$"))
 
 [(variable_expansion) (list_element_access)] @variable.special
 
@@ -61,9 +57,10 @@
 (function_definition name: [(word) (concatenation)] @function)
 (function_definition option: (word) @constant (#match? @constant "^-."))
 
-[(return) (break) (continue)] @keyword.control
+(return "return" @keyword.control)
+[(break) (continue)] @keyword.control
 
 (conditional_execution ["&&" "||"] @operator)
-(negated_statement "not" @keyword.control)
+(negated_statement ["not" "!"] @keyword.control)
 
 (ERROR) @error

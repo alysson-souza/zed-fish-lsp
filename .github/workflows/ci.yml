@@ -27,6 +27,9 @@ jobs:
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
+      - name: Test
+        run: cargo test
+
       - name: Check
         run: cargo check --target wasm32-wasip1
 

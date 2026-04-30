@@ -7,7 +7,8 @@
 
 ; Run button on functions
 (
-  (function_definition
-    name: (_) @run)
+  (program
+    (function_definition
+      name: (_) @run))
   (#set! tag fish-function)
 )
