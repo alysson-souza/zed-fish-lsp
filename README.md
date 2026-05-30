@@ -96,31 +96,31 @@ See [fish-lsp](https://github.com/ndonfris/fish-lsp) for diagnostic codes and mo
 
 ### Runnables (Run Buttons)
 
-The extension provides run buttons for Fish scripts and functions. To enable them, add these tasks to your project's `.zed/tasks.json` (or global `~/.config/zed/tasks.json`):
+The extension provides default run buttons for Fish scripts and functions.
+
+- **Scripts**: Click the run button on the shebang line (`#!/usr/bin/env fish`) to run the entire script.
+- **Functions**: Click the run button on a function name to source the file and run that function.
+
+> **Note**: Nested functions (functions defined inside other functions) won't work as standalone runnables since they only exist within their parent function's scope.
+
+To override the default commands, add tasks with matching tags to your project's `.zed/tasks.json` or global `~/.config/zed/tasks.json`:
 
 ```json
 [
   {
     "label": "Run: $ZED_FILENAME",
-    "command": "fish $ZED_FILE",
-    "shell": { "program": "fish" },
+    "command": "fish",
+    "args": ["$ZED_FILE"],
     "tags": ["fish-script"]
   },
   {
     "label": "Run: $ZED_SYMBOL",
-    "command": "source $ZED_FILE; and $ZED_SYMBOL",
+    "command": "source \"$ZED_FILE\"; and $ZED_SYMBOL",
     "shell": { "program": "fish" },
     "tags": ["fish-function"]
   }
 ]
 ```
-
-This enables:
-
-- **Scripts**: Click the run button on the shebang line (`#!/usr/bin/env fish`) to run the entire script
-- **Functions**: Click the run button on any `function` definition to run that function
-
-> **Note**: Nested functions (functions defined inside other functions) won't work as standalone runnables since they only exist within their parent function's scope.
 
 ## Development
 

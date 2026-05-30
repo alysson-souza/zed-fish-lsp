@@ -1,0 +1,14 @@
+[
+  {
+    "label": "fish: run script $ZED_FILENAME",
+    "command": "fish",
+    "args": ["$ZED_FILE"],
+    "tags": ["fish-script"]
+  },
+  {
+    "label": "fish: run function $ZED_SYMBOL",
+    "command": "source \"$ZED_FILE\"; and $ZED_SYMBOL",
+    "shell": { "program": "fish" },
+    "tags": ["fish-function"]
+  }
+]
