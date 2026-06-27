@@ -819,7 +819,7 @@ dependencies = [
 
 [[package]]
 name = "zed-fish-lsp"
-version = "0.2.2"
+version = "0.2.3"
 dependencies = [
  "tree-sitter",
  "tree-sitter-fish",

@@ -7,6 +7,10 @@ Fish shell language support with [fish-lsp](https://github.com/ndonfris/fish-lsp
 
 Get intelligent code completion, hover documentation, go-to-definition, diagnostics, and more for your Fish shell scripts.
 
+<p align="center">
+  <img src="assets/example.png" alt="Fish LSP extension running in Zed" width="760">
+</p>
+
 ## Features
 
 ### Syntax Highlighting
@@ -24,6 +28,8 @@ Get intelligent code completion, hover documentation, go-to-definition, diagnost
 - Diagnostics
 - Code actions
 - Formatting
+- Inlay hints, when enabled in Zed settings
+- Semantic tokens, when enabled in Zed settings
 
 ### Editor Integration
 
@@ -56,7 +62,7 @@ npm install -g fish-lsp
 
 ## Configuration
 
-The extension works out of the box. To customize fish-lsp, add options to your Zed `settings.json`:
+The extension works out of the box. To customize fish-lsp, add only the options you need to your Zed `settings.json`:
 
 ```jsonc
 {
@@ -67,30 +73,50 @@ The extension works out of the box. To customize fish-lsp, add options to your Z
         "fish_lsp_diagnostic_disable_error_codes": [2002, 2003],
         // Max diagnostics per file (default: 0 = unlimited)
         "fish_lsp_max_diagnostics": 100,
-        // Paths to index for completions and go-to-definition (default: ["$__fish_config_dir", "$__fish_data_dir"])
+        // Extra paths to index for completions and go-to-definition
+        // (default: ["$__fish_config_dir", "$__fish_data_dir"])
         "fish_lsp_all_indexed_paths": [
           "$__fish_config_dir",
           "$__fish_data_dir",
           "~/my-fish-scripts",
         ],
-        // Paths where rename/refactoring is allowed (default: ["$__fish_config_dir"])
-        "fish_lsp_modifiable_paths": ["$__fish_config_dir"],
+        // Paths where rename/refactoring is allowed
+        // (default: ["$__fish_config_dir"])
+        "fish_lsp_modifiable_paths": [
+          "$__fish_config_dir",
+          "~/my-fish-scripts",
+        ],
         // Disable specific LSP handlers (default: [])
-        // Available: hover, complete, rename, definition, references, formatting, codeAction, signatureHelp, executeCommand
+        // Available: complete, hover, rename, definition, implementation, reference, logger,
+        // formatting, formatRange, typeFormatting, codeAction, codeLens, folding, selectionRange,
+        // signature, executeCommand, inlayHint, highlight, diagnostic, popups, semanticTokens
         "fish_lsp_disabled_handlers": ["formatting"],
-        // Formatter executable (default: "fish_indent")
-        "fish_lsp_format_exec": "fish_indent",
-        // Formatter arguments (default: [])
-        "fish_lsp_format_args": ["--no-indent"],
         // Log file for debugging (default: "" = disabled)
-        "fish_lsp_logfile": "/tmp/fish-lsp.log",
-        // Log level (default: "warning") — error, warning, info, debug, trace
+        "fish_lsp_log_file": "/tmp/fish-lsp.log",
+        // Log level, one of error, warning, info, debug, trace (default: "")
         "fish_lsp_log_level": "debug",
+        // Set false to index fish_lsp_all_indexed_paths as additional workspaces
+        // (default: true)
+        "fish_lsp_single_workspace_support": false,
+        // Paths ignored during workspace discovery
+        // (default: ["**/.git/**", "**/node_modules/**", "**/containerized/**", "**/docker/**"])
+        "fish_lsp_ignore_paths": [
+          "**/.git/**",
+          "**/node_modules/**",
+          "**/containerized/**",
+          "**/docker/**",
+        ],
+        // Max depth for workspace discovery (default: 3)
+        "fish_lsp_max_workspace_depth": 3,
+        // Pin the fish executable used by fish-lsp child processes (default: "fish")
+        "fish_lsp_fish_path": "/usr/bin/fish",
       },
     },
   },
 }
 ```
+
+When updating older settings, replace `fish_lsp_logfile` with `fish_lsp_log_file`. The old `fish_lsp_format_exec` and `fish_lsp_format_args` options are not part of the current fish-lsp configuration schema. Formatting is handled by `fish_indent`. Disable formatting with `fish_lsp_disabled_handlers` or use `# @fish_indent: off` and `# @fish_indent: on` comments in Fish files.
 
 See [fish-lsp](https://github.com/ndonfris/fish-lsp) for diagnostic codes and more options.
 
