@@ -1,11 +1,9 @@
-# Fish LSP Extension for Zed
+# Fish LSP extension for Zed
 
 [![CI](https://github.com/alysson-souza/zed-fish-lsp/actions/workflows/ci.yml/badge.svg)](https://github.com/alysson-souza/zed-fish-lsp/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Fish shell language support with [fish-lsp](https://github.com/ndonfris/fish-lsp) integration for the [Zed editor](https://zed.dev).
-
-Get intelligent code completion, hover documentation, go-to-definition, diagnostics, and more for your Fish shell scripts.
+Fish shell support for [Zed](https://zed.dev) using [fish-lsp](https://github.com/ndonfris/fish-lsp). The extension adds code completion, hover documentation, go to definition, diagnostics, and other language server features to Fish scripts.
 
 <p align="center">
   <img src="assets/example.png" alt="Fish LSP extension running in Zed" width="760">
@@ -13,13 +11,13 @@ Get intelligent code completion, hover documentation, go-to-definition, diagnost
 
 ## Features
 
-### Syntax Highlighting
+### Syntax highlighting
 
-- Full syntax highlighting via tree-sitter
+- Syntax highlighting via tree-sitter
 - Keyword bracket matching (`function`/`end`, `if`/`end`, etc.)
 - Regex syntax highlighting inside `grep`, `sed`, `rg`, `awk`, `string match -r`
 
-### LSP Support (via fish-lsp)
+### LSP support
 
 - Code completion
 - Hover documentation
@@ -31,7 +29,7 @@ Get intelligent code completion, hover documentation, go-to-definition, diagnost
 - Inlay hints, when enabled in Zed settings
 - Semantic tokens, when enabled in Zed settings
 
-### Editor Integration
+### Editor integration
 
 - Code outline
 - Auto-indentation
@@ -47,12 +45,9 @@ Get intelligent code completion, hover documentation, go-to-definition, diagnost
 4. Run `zed: install dev extension`
 5. Select this directory
 
-### LSP Binary
+### LSP binary
 
-The extension will:
-
-1. First check if `fish-lsp` is available in your PATH
-2. If not found, automatically download it via Zed's built-in npm
+The extension first looks for `fish-lsp` in your PATH. If it is not installed, Zed downloads it through its built-in npm support.
 
 To install fish-lsp manually:
 
@@ -62,7 +57,7 @@ npm install -g fish-lsp
 
 ## Configuration
 
-The extension works out of the box. To customize fish-lsp, add only the options you need to your Zed `settings.json`:
+The default settings work without configuration. To change fish-lsp behavior, add the options you need to your Zed `settings.json`:
 
 ```jsonc
 {
@@ -118,16 +113,16 @@ The extension works out of the box. To customize fish-lsp, add only the options 
 
 When updating older settings, replace `fish_lsp_logfile` with `fish_lsp_log_file`. The old `fish_lsp_format_exec` and `fish_lsp_format_args` options are not part of the current fish-lsp configuration schema. Formatting is handled by `fish_indent`. Disable formatting with `fish_lsp_disabled_handlers` or use `# @fish_indent: off` and `# @fish_indent: on` comments in Fish files.
 
-See [fish-lsp](https://github.com/ndonfris/fish-lsp) for diagnostic codes and more options.
+See [fish-lsp](https://github.com/ndonfris/fish-lsp) for diagnostic codes and configuration options.
 
-### Runnables (Run Buttons)
+### Runnables
 
-The extension provides default run buttons for Fish scripts and functions.
+The extension adds run buttons for Fish scripts and functions.
 
-- **Scripts**: Click the run button on the shebang line (`#!/usr/bin/env fish`) to run the entire script.
-- **Functions**: Click the run button on a function name to source the file and run that function.
+- Click the run button on a script's shebang line, such as `#!/usr/bin/env fish`, to run the script.
+- Click the run button on a function name to source the file and run that function.
 
-> **Note**: Nested functions (functions defined inside other functions) won't work as standalone runnables since they only exist within their parent function's scope.
+> Nested functions cannot run on their own because they exist only in the parent function's scope.
 
 To override the default commands, add tasks with matching tags to your project's `.zed/tasks.json` or global `~/.config/zed/tasks.json`:
 
@@ -169,10 +164,10 @@ cargo test
 
 ## Credits
 
-- [fish-lsp](https://github.com/ndonfris/fish-lsp) - LSP implementation for Fish
-- [tree-sitter-fish](https://github.com/ram02z/tree-sitter-fish) - Tree-sitter grammar
-- [hasit/zed-fish](https://github.com/hasit/zed-fish) - Reference for tree-sitter queries
+- [fish-lsp](https://github.com/ndonfris/fish-lsp), the Fish language server
+- [tree-sitter-fish](https://github.com/ram02z/tree-sitter-fish), the tree-sitter grammar
+- [hasit/zed-fish](https://github.com/hasit/zed-fish), a reference for tree-sitter queries
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project uses the MIT License. See [LICENSE](LICENSE) for details.
